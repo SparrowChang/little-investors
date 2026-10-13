@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f8f4" />
+  <meta name="description" content="Max & Lawrence 的美股模擬投資學習網站：選股、記錄、回顧走勢。" />
+  <title>Little Investors · Max & Lawrence</title>
+  <style>
+    :root{--bg:#f6f8f4;--paper:#fff;--ink:#182b25;--muted:#73817b;--line:#e6ebe5;--green:#087e51;--red:#ca4c52;--lime:#d9f9a8;--shadow:0 10px 34px rgba(18,45,33,.055);--radius:22px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:14px}button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #9cdba1;outline-offset:2px}h1,h2,h3,p{margin:0}h1{font-size:36px;letter-spacing:-1.4px;line-height:1.22}h2{font-size:18px;letter-spacing:-.35px}h3{font-size:15px}small{font-size:12px;color:var(--muted)}.app{max-width:1290px;margin:auto;padding:24px 32px 70px}
+    .topbar,.top-left,.top-right,.brand,.brand-icon,.people,.person,.row,.row-between,.row-center,.meta,.stat-footer,.sec-title,.trend,.stock-left,.chart-controls,.times,.pill,.trade-actions,.field-row,.mini-note,.modal-header,.footer{display:flex;align-items:center}.topbar,.row-between,.sec-title,.stat-footer,.footer{justify-content:space-between}.topbar{gap:16px;padding:2px 0 25px}.top-left,.top-right{gap:24px}.brand{gap:11px;font-weight:850;letter-spacing:-.55px;font-size:19px;white-space:nowrap}.brand-icon{width:36px;height:36px;justify-content:center;background:#152f22;color:var(--lime);border-radius:12px;font-size:23px}.eyebrow{font-size:11px;letter-spacing:1.25px;text-transform:uppercase;color:#85958d;font-weight:800}.people{background:white;border-radius:999px;border:1px solid var(--line);padding:5px;gap:4px}.person{gap:9px;border:0;background:transparent;padding:9px 14px;border-radius:999px;font-weight:700;color:#84918c}.person.selected{background:var(--ink);color:white}.avatar{height:23px;width:23px;display:inline-grid;place-items:center;font-size:11px;font-weight:850;background:#e7f2dd;color:#245a39;border-radius:50%}.selected .avatar{background:#d8f8b0;color:#265234}.top-right{gap:12px}.light-btn,.outline-btn,.icon-btn{border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:700;border-radius:13px;padding:11px 14px;transition:.15s}.light-btn:hover,.outline-btn:hover,.icon-btn:hover{background:#f0f5eb}.icon-btn{padding:8px 12px;font-size:20px}.status-pill{border-radius:999px;background:#fff4dc;padding:8px 11px;color:#94671a;font-size:12px;font-weight:850;white-space:nowrap}.status-pill.live{background:#e3f8eb;color:var(--green)}
+    .hero{background:linear-gradient(117deg,#183327,#244538);color:white;border-radius:29px;padding:32px 38px;display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;right:-60px;top:-160px;background:radial-gradient(circle,rgba(209,250,143,.16),rgba(209,250,143,0) 68%);pointer-events:none}.hero .eyebrow{color:#c2ddb7}.hero h1{margin-top:12px}.hero-sub{margin-top:12px;color:#cbdacc;line-height:1.7;font-size:14px}.hero-art{font-size:64px;font-weight:900;letter-spacing:-7px;color:#d8ffa0;transform:rotate(-10deg);opacity:.9;margin-right:37px}.hero-sub strong{color:#e5ffc9}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:20px}.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.stat{padding:22px 23px}.stat-label{font-size:12px;color:var(--muted);font-weight:750}.stat-number{margin:12px 0 9px;font-size:29px;letter-spacing:-1.2px;font-weight:860;white-space:nowrap}.stat-footer{color:#84948a;font-size:11.5px}.up{color:var(--green)!important}.down{color:var(--red)!important}.neutral{color:var(--muted)!important}.section-grid{display:grid;grid-template-columns:minmax(0,1.78fr) minmax(290px,1fr);gap:18px;margin-top:20px}.chart-card{padding:25px 26px 18px;min-width:0}.sec-title{gap:12px}.section-kicker{font-size:11px;font-weight:750;color:var(--muted);margin-bottom:6px}.title-value{font-size:25px;letter-spacing:-.8px;font-weight:850;margin-top:11px}.trend{gap:8px;font-size:13px;font-weight:780;margin-top:6px}.chart-controls{gap:12px;flex-wrap:wrap}.chart-selector{max-width:165px;background:#f7faf6;border:1px solid var(--line);color:var(--ink);border-radius:11px;padding:9px 11px;font-weight:750;outline:0}.times{gap:3px;background:#f5f7f3;padding:4px;border-radius:11px}.times button{padding:8px 10px;border:0;background:transparent;color:#85928b;border-radius:8px;font-weight:800;font-size:11.5px}.times button.active{background:#fff;color:var(--ink);box-shadow:0 2px 7px #19372812}.chart-wrap{position:relative;margin-top:15px;height:265px;touch-action:pan-y}.chart-svg{width:100%;height:100%;display:block;overflow:visible}.hover-tip{position:absolute;z-index:3;pointer-events:none;display:none;background:#193326;color:#fff;padding:9px 11px;border-radius:11px;font-size:12px;box-shadow:0 7px 20px #0002;line-height:1.45;white-space:nowrap}.chart-foot{border-top:1px solid var(--line);display:flex;align-items:center;gap:7px;color:#8d9992;font-size:11px;padding-top:14px;line-height:1.5;flex-wrap:wrap}.dot{width:6px;height:6px;flex-shrink:0;background:#78a88b;border-radius:50%}
+    .watch-card{padding:24px 21px}.count{font-size:12px;color:var(--muted);font-weight:800;margin-left:7px}.add-btn{background:#e7f8cd;color:#275b29;border:0;border-radius:11px;font-weight:850;padding:10px 13px}.add-btn:hover{background:#d4f3b0}.watch-list{margin-top:16px;display:flex;flex-direction:column;gap:3px;max-height:420px;overflow:auto}.watch-item{display:grid;grid-template-columns:43px minmax(0,1fr) auto;align-items:center;gap:9px;border:1px solid transparent;background:transparent;border-radius:13px;width:100%;padding:11px 6px;text-align:left;color:var(--ink)}.watch-item:hover,.watch-item.active{background:#f4f8ee}.ticker-icon{display:grid;place-items:center;width:42px;height:42px;border:1px solid #e2e9df;background:#fff;border-radius:13px;font-size:11px;font-weight:850;letter-spacing:-.7px}.stock-main{font-size:13.5px;font-weight:850}.stock-sub{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}.stock-right{text-align:right}.stock-price{font-size:13px;font-weight:840}.stock-change{display:block;margin-top:3px;font-size:11px;font-weight:750}.empty{border:1px dashed #d6e1d3;border-radius:15px;padding:35px 17px;text-align:center;color:#82938a;line-height:1.7}.empty .big{font-size:33px;display:block;margin-bottom:9px}.watch-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding-top:16px;border-top:1px solid var(--line);margin-top:13px}.primary{border:0;border-radius:12px;background:var(--ink);color:#fff;padding:12px 14px;font-weight:850}.primary:hover{background:#345541}.secondary{border:1px solid #dfe8d9;border-radius:12px;background:#fff;color:var(--ink);padding:12px 14px;font-weight:850}.secondary:hover{background:#f4f8f1}
+    .lower-grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,1fr);gap:18px;margin-top:18px}.bottom-card{padding:24px 25px;min-width:0}.section-sub{color:#84938a;font-size:12px;margin-top:8px}.table-wrap{overflow-x:auto;margin-top:19px}.history-table{width:100%;border-collapse:collapse;white-space:nowrap;text-align:left}.history-table th{font-size:11px;color:#8a9890;font-weight:750;border-bottom:1px solid var(--line);padding:10px 9px}.history-table td{font-size:12px;border-bottom:1px solid #eef1ec;padding:14px 9px}.history-table tbody tr:last-child td{border:0}.tag{font-size:11px;font-weight:800;border-radius:8px;padding:5px 8px;background:#e8f7eb;color:#087f51}.tag.sell{background:#fff0e8;color:#b75d37}.symbol-cell{font-weight:850}.empty-table{margin-top:26px;color:#94a29b;text-align:center;padding:25px 0;line-height:1.7}.reason{max-width:185px;overflow:hidden;text-overflow:ellipsis}.note-list{margin-top:18px;display:flex;flex-direction:column;gap:13px}.note-item{padding:15px 16px;background:#f7faf5;border-radius:13px;border:1px solid #edf1ea}.note-head{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);gap:8px}.note-head b{color:var(--green)}.note-body{font-size:12px;color:#3d5445;line-height:1.8;margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere}.reflect{margin-top:17px;border:1px solid #e5ede0;background:#f4f9ee;border-radius:14px;padding:16px;font-size:12px;color:#567154;line-height:1.85}.reflect strong{color:#315739}.footer{margin-top:25px;gap:20px;color:#8e9c94;font-size:11.5px;line-height:1.7}.footer a{color:#3c7450}
+    dialog{border:0;box-shadow:0 28px 90px #10201745;border-radius:22px;max-width:480px;width:calc(100vw - 32px);padding:0;color:var(--ink);background:#fff}dialog::backdrop{background:rgba(13,29,23,.56);backdrop-filter:blur(3px)}.modal-content{padding:28px}.modal-header{justify-content:space-between;margin-bottom:22px}.modal-header h2{font-size:21px}.close-x{border:0;background:#f1f5ee;color:var(--ink);border-radius:50%;width:32px;height:32px;font-size:20px;display:grid;place-items:center}.form-label{font-size:12px;font-weight:800;color:#557063;display:block;margin:18px 0 7px}.input,.textarea{width:100%;border:1px solid #dce6dd;border-radius:13px;background:#f9fbf8;color:var(--ink);padding:14px;outline:0}.input:focus,.textarea:focus{border-color:#82c995}.textarea{min-height:110px;resize:vertical;line-height:1.65}.field-row{gap:10px}.field-row>*{flex:1;min-width:0}.helper{font-size:12px;line-height:1.65;color:#8d9a92;margin-top:9px}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}.chip{font-size:12px;font-weight:800;border:1px solid #e1e8df;background:#fff;color:#3c5b48;border-radius:10px;padding:10px 13px}.chip:hover{background:#ecf9dd}.form-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}.form-actions button{min-width:110px}.quote-summary{background:#f4f8f2;border-radius:13px;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:12px;margin:12px 0}.summary-label{color:#74907c}.summary-price{font-size:19px;font-weight:900}.notice{font-size:12px;line-height:1.7;background:#fff6e7;border:1px solid #f2e6cc;border-radius:12px;padding:11px 14px;color:#8b6a35;margin-top:14px}.notice.live-note{background:#f0f9ef;color:#487451;border-color:#daedda}.trade-tabs{display:flex;gap:7px;margin-bottom:16px}.trade-tabs button{flex:1;background:#f3f7f1;border:0;padding:12px;border-radius:11px;font-weight:850;color:#85958b}.trade-tabs button.active{background:#e0f4c6;color:#205d31}.trade-tabs button.active.sell{background:#ffefe7;color:#af5a36}.preview-total{margin-top:15px;font-size:13px;color:#66796d}.preview-total b{font-size:20px;color:var(--ink);margin-left:7px}.inline-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.tiny{font-size:11px;padding:7px 9px}.muted{color:var(--muted)}.setting-option{margin-bottom:17px}.setting-option strong{display:block;font-size:13px;margin-bottom:6px}.setting-option p{color:#8a9c90;font-size:12px;line-height:1.7}.setting-option .field-row{margin-top:10px}.divider{border-top:1px solid var(--line);margin:20px 0}.toast{position:fixed;bottom:25px;left:50%;transform:translateX(-50%) translateY(30px);background:#1b3a29;color:white;border-radius:12px;padding:12px 19px;box-shadow:0 10px 35px #0003;font-weight:750;font-size:12px;z-index:100;opacity:0;transition:.2s;pointer-events:none;max-width:min(460px,90vw);text-align:center}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.loader{display:inline-block;border:2px solid #ccd8ca;border-top-color:var(--green);border-radius:50%;width:13px;height:13px;animation:spin .65s linear infinite;margin-right:5px;vertical-align:middle}@keyframes spin{to{transform:rotate(360deg)}}
+    .setting-option p strong{display:inline;margin:0}
+    .locale-toggle{display:flex;align-items:center;background:#fff;border:1px solid var(--line);padding:4px;border-radius:12px;gap:2px;white-space:nowrap}.locale-toggle button{border:0;background:transparent;color:#71857b;border-radius:9px;padding:8px 11px;font-weight:850;font-size:12px}.locale-toggle button.active{background:#1b362a;color:white}.top-right{flex-wrap:wrap;justify-content:flex-end}
+    @media(max-width:1000px){.app{padding:18px 18px 55px}.stats{gap:10px}.stat{padding:20px 15px}.stat-number{font-size:24px}.section-grid{grid-template-columns:minmax(0,1.45fr) minmax(285px,1fr)}.chart-controls{gap:7px}.times button{padding:8px}.lower-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.topbar{flex-wrap:wrap}.top-left,.top-right{width:100%;justify-content:space-between}.hero{padding:27px}.hero h1{font-size:29px}.hero-art{font-size:39px;margin-right:18px;letter-spacing:-3px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.section-grid,.lower-grid{grid-template-columns:1fr}.chart-card,.watch-card,.bottom-card{padding:21px 18px}.chart-wrap{height:245px}.watch-list{max-height:none}.chart-controls{margin-top:17px}.sec-title.chart-head{display:block}.chart-selector{max-width:165px}.footer{display:block}.footer span{display:block;margin-top:8px}}@media(max-width:420px){.app{padding:13px 12px 45px}.top-left{gap:8px}.brand{font-size:16px}.people{padding:4px}.person{padding:7px;gap:5px;font-size:11px}.hero h1{font-size:26px}.hero-art{display:none}.hero{display:block}.stat-number{font-size:22px}.chart-controls{justify-content:space-between}.chart-selector{max-width:145px}.times button{padding:8px 7px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="top-left"><div class="brand"><div class="brand-icon">↗</div> Little Investors</div>
+      <div class="people" role="tablist" aria-label="選擇學員">
+        <button id="tab-max" class="person selected" data-person="max" role="tab" aria-selected="true"><span class="avatar">M</span> Max</button>
+        <button id="tab-lawrence" class="person" data-person="lawrence" role="tab" aria-selected="false"><span class="avatar">L</span> Lawrence</button>
+      </div>
+    </div>
+    <div class="top-right"><div class="locale-toggle" role="group" aria-label="Language / 語言"><button type="button" data-lang="zh" aria-pressed="true" class="active">中文</button><button type="button" data-lang="en" aria-pressed="false">English</button></div><span id="modeBadge" class="status-pill">● 示範行情</span><button class="light-btn" data-action="settings">⚙ 設定 / 備份</button></div>
+  </header>
+
+  <section class="hero"><div><div class="eyebrow">LEARN · INVEST · GROW</div><h1 id="heroTitle">嗨，Max！一起開始投資 🌱</h1><p class="hero-sub">用 <strong>$10,000 虛擬資金</strong> 練習選股。最多 5 支美股，<br>重點不是賺最快，而是學會 <strong>觀察、思考、記錄</strong>。</p></div><div class="hero-art" aria-hidden="true">↗ ↗</div></section>
+
+  <section class="stats" aria-label="投資數據">
+    <article class="card stat"><div class="stat-label">投資組合總價值</div><div class="stat-number" id="statTotal">$10,000.00</div><div class="stat-footer"><span>虛擬帳戶</span><span id="statTotalSub">尚未交易</span></div></article>
+    <article class="card stat"><div class="stat-label">可用現金</div><div class="stat-number" id="statCash">$10,000.00</div><div class="stat-footer"><span>模擬買股可使用</span><span>USD</span></div></article>
+    <article class="card stat"><div class="stat-label">股票市值</div><div class="stat-number" id="statInvested">$0.00</div><div class="stat-footer"><span>持有股票目前價值</span><span id="statStocks">0 支</span></div></article>
+    <article class="card stat"><div class="stat-label">累積報酬</div><div class="stat-number" id="statProfit">$0.00</div><div class="stat-footer"><span id="statProfitPct">+0.00%</span><span>相對起始本金</span></div></article>
+  </section>
+
+  <section class="section-grid">
+    <article class="card chart-card"><div class="sec-title chart-head"><div><div class="section-kicker">PERFORMANCE / 走勢探索</div><h2 id="chartHeading">投資組合走勢</h2></div><div class="chart-controls"><select id="chartSelect" class="chart-selector" aria-label="選擇走勢"><option value="portfolio">整體投資組合</option></select><div class="times" aria-label="走勢時間範圍"><button data-range="1D" class="active">1D</button><button data-range="1W">1W</button><button data-range="1M">1M</button><button data-range="1Y">1Y</button><button data-range="MAX">MAX</button></div></div></div>
+      <div id="chartValue" class="title-value">$10,000.00</div><div class="trend" id="chartReturn"><span class="neutral">+0.00% · 所選期間</span></div>
+      <div class="chart-wrap" id="chartWrap"><svg id="graph" class="chart-svg" viewBox="0 0 900 265" preserveAspectRatio="none" role="img" aria-label="股票價值折線圖"></svg><div class="hover-tip" id="hoverTip"></div></div>
+      <div class="chart-foot"><span class="dot"></span><span id="chartInfo">虛擬投資練習；示範行情不是市場實際股價。</span></div>
+    </article>
+    <aside class="card watch-card"><div class="sec-title"><div><h2>我的選股 <span class="count" id="watchCount">0 / 5</span></h2><p class="section-sub">先觀察，再決定要不要買</p></div><button class="add-btn" data-action="add">＋ 選股票</button></div><div class="watch-list" id="watchList"></div><div class="watch-actions"><button class="primary" data-action="open-buy">↗ 模擬買入</button><button class="secondary" data-action="open-sell">↘ 模擬賣出</button></div></aside>
+  </section>
+
+  <section class="lower-grid">
+    <article class="card bottom-card"><div class="sec-title"><div><h2>🗂 買賣紀錄</h2><p class="section-sub">每一次交易都是一堂課</p></div><button class="outline-btn tiny" data-action="undo">↶ 撤銷最後一筆</button></div><div class="table-wrap" id="historyWrap"></div></article>
+    <article class="card bottom-card"><div class="sec-title"><div><h2>✍️ 我的投資日記</h2><p class="section-sub">寫下「為什麼」比猜股價更重要</p></div><button class="outline-btn tiny" data-action="note">＋ 寫日記</button></div><div class="note-list" id="noteList"></div><div class="reflect"><strong>💡 本週小問題</strong><br>如果你買的股票明天跌了 10%，你會怎麼做？為什麼？可以記在投資日記裡。</div></article>
+  </section>
+  <footer class="footer"><span>Little Investors © 2026 · 家庭理財教育工具 · 不會執行真實交易或提供投資建議</span><span id="saveStatus">資料僅儲存在這個瀏覽器 · 請定期匯出備份</span></footer>
+</div>
+
+<dialog id="addDialog"><div class="modal-content"><div class="modal-header"><h2>＋ 新增觀察股票</h2><button class="close-x" data-close aria-label="關閉">×</button></div><form id="addForm"><label class="form-label" for="symbolInput">美股代號（例如 AAPL）</label><input class="input" id="symbolInput" placeholder="輸入股票代號" maxlength="10" autocomplete="off" required /><p class="helper">每人最多 5 支，新增只是加入觀察清單，還沒有買進。</p><div class="form-label">試試看這些代號</div><div class="chips" id="suggestedChips"></div><div class="form-actions"><button class="secondary" type="button" data-close>取消</button><button class="primary" type="submit">加入我的選股</button></div></form></div></dialog>
+
+<dialog id="tradeDialog"><div class="modal-content"><div class="modal-header"><h2 id="tradeTitle">模擬買入</h2><button class="close-x" data-close aria-label="關閉">×</button></div><div class="trade-tabs"><button id="buyTab" class="active" type="button" data-trade-type="buy">買入 Buy</button><button id="sellTab" type="button" data-trade-type="sell">賣出 Sell</button></div><form id="tradeForm"><label class="form-label" for="tradeSymbol">選擇股票</label><select class="input" id="tradeSymbol" required></select><div class="quote-summary"><div><span class="summary-label">目前參考價格</span><div style="margin-top:4px;font-size:11px;color:#849589" id="tradeQuoteSource">示範行情 · 非真實報價</div></div><div class="summary-price" id="tradePrice">—</div></div><label class="form-label" for="tradeShares">股數（可輸入小數）</label><input class="input" id="tradeShares" type="number" step="0.001" min="0.001" placeholder="例如 1 或 0.5" required /><p class="helper" id="tradeAvailable">可用現金 $10,000.00</p><label class="form-label" for="tradeReason">我的投資理由（建議每次都寫）</label><textarea class="textarea" id="tradeReason" maxlength="280" placeholder="例如：我看好這家公司長期的產品及成長，但也知道股價會下跌。"></textarea><div class="preview-total">這次交易估計金額 <b id="tradeTotal">$0.00</b></div><div class="notice">純模擬練習。成交價採畫面顯示的參考價格，<strong>不計手續費、稅金或滑價</strong>，不等於真實成交。</div><div class="form-actions"><button class="secondary" type="button" data-close>取消</button><button class="primary" type="submit" id="tradeSubmit">確認模擬買入</button></div></form></div></dialog>
+
+<dialog id="noteDialog"><div class="modal-content"><div class="modal-header"><h2>✍️ 記下我的想法</h2><button class="close-x" data-close aria-label="關閉">×</button></div><form id="noteForm"><label class="form-label" for="noteSymbol">關於哪一支股票？</label><select class="input" id="noteSymbol"></select><label class="form-label" for="noteText">今天想記錄什麼？</label><textarea class="textarea" id="noteText" placeholder="我今天觀察到……；我覺得有什麼風險……；下次要注意……" maxlength="1000" required></textarea><div class="form-actions"><button type="button" class="secondary" data-close>取消</button><button type="submit" class="primary">保存日記</button></div></form></div></dialog>
+
+<dialog id="settingsDialog"><div class="modal-content"><div class="modal-header"><h2>⚙ 設定與資料備份</h2><button class="close-x" data-close aria-label="關閉">×</button></div><div class="setting-option"><strong>① 行情來源</strong><p>示範模式完全不用金鑰，可立即練習；真實模式需自行申請 Twelve Data API key。<strong>兩種模式的交易帳本分開</strong>，不會把假價格和真價格混用。</p><div class="field-row"><button class="secondary" id="enableDemo" type="button">使用示範行情</button><button class="primary" id="enableLive" type="button">切換市場資料</button></div></div><div class="setting-option"><label class="form-label" for="apiKeyInput">Twelve Data API key</label><input class="input" id="apiKeyInput" type="password" placeholder="在此貼上自己的 API key" autocomplete="off" /><p>Key 只存於這台裝置的瀏覽器，不會寫進 GitHub 網站檔案。共享裝置使用仍有金鑰外洩風險。</p><div class="inline-actions" style="margin-top:10px"><button class="secondary tiny" id="saveApiKey" type="button">儲存金鑰</button><button class="secondary tiny" id="clearApiKey" type="button">刪除金鑰</button><button class="secondary tiny" id="refreshMarket" type="button">↻ 更新報價</button></div></div><div class="divider"></div><div class="setting-option"><strong>② 備份孩子的紀錄</strong><p>紀錄只存在「這個瀏覽器」。換電腦或清除網站資料會消失；定期下載 JSON 備份，再到其他裝置匯入。</p><div class="field-row"><button id="exportBtn" class="secondary" type="button">↓ 匯出備份</button><button id="importBtn" class="secondary" type="button">↑ 匯入備份</button><input id="importFile" type="file" accept=".json,application/json" hidden /></div></div><div class="notice live-note">🔐 此網站不需要真實券商帳戶、銀行資訊或信用卡。公開的 GitHub Pages 網址可以被他人開啟，但不會自動看到你這台裝置的紀錄。</div></div></dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+'use strict';
+(() => {
+  const APP_KEY='little-investors-family-v1';
+  const API_KEY_STORAGE='little-investors-twelvedata-key-v1';
+  const START_CASH=10000;
+  const POPULAR=['AAPL','MSFT','NVDA','GOOGL','AMZN','TSLA','META','COST','DIS','KO','V','JPM','AMD','TSM','VOO','SPY'];
+  const STOCKS={AAPL:['Apple',196],MSFT:['Microsoft',435],NVDA:['NVIDIA',130],GOOGL:['Alphabet',175],AMZN:['Amazon',190],TSLA:['Tesla',265],META:['Meta',520],COST:['Costco',910],DIS:['Disney',110],KO:['Coca-Cola',65],V:['Visa',286],JPM:['JPMorgan',220],AMD:['AMD',165],TSM:['TSMC',214],VOO:['Vanguard S&P 500 ETF',530],SPY:['SPDR S&P 500 ETF',560]};
+  const PERIODS={ '1D':{ms:864e5*1.45,interval:'5min',size:90}, '1W':{ms:864e5*8,interval:'1h',size:150},'1M':{ms:864e5*35,interval:'1day',size:42},'1Y':{ms:864e5*380,interval:'1week',size:62},MAX:{ms:0,interval:'1month',size:850}};
+  const $=(id)=>document.getElementById(id);
+  const now=()=>Date.now();
+  const blankPerson=()=>({watch:[],trades:[],notes:[]});
+  const emptyState=()=>({version:1,active:'max',lang:'zh',mode:'demo',portfolios:{demo:{max:blankPerson(),lawrence:blankPerson()},live:{max:blankPerson(),lawrence:blankPerson()}}});
+  const isSymbol=s=>typeof s==='string'&&/^[A-Z][A-Z0-9.-]{0,9}$/.test(s);
+  const cleanText=(s,n=500)=>String(s??'').slice(0,n).trim();
+  const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const money=v=>Number.isFinite(v)?new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',minimumFractionDigits:2,maximumFractionDigits:2}).format(v):'—';
+  const pct=v=>(v>=0?'+':'')+v.toFixed(2)+'%';
+  const nfmt=v=>Number(v.toFixed(3)).toLocaleString('en-US',{maximumFractionDigits:3});
+  const day=t=>new Date(t).toLocaleDateString(state.lang==='en'?'en-US':'zh-TW',{month:'short',day:'numeric'});
+  const datetime=t=>new Date(t).toLocaleString(state.lang==='en'?'en-US':'zh-TW',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  let cache=new Map(), chartPoints=[], renderSeq=0, quoteSeq=0, chartRefreshTimer=null, toastTimer=null, selected='portfolio', range='1D', tradeType='buy';
+  let apiKey='';try{apiKey=localStorage.getItem(API_KEY_STORAGE)||''}catch(e){}
+  function sanitizePerson(p){
+    const out=blankPerson();if(!p||typeof p!=='object')return out;
+    out.watch=Array.isArray(p.watch)?Array.from(new Set(p.watch.filter(isSymbol))).slice(0,5):[];
+    const pending=Array.isArray(p.trades)?p.trades.slice(0,10000).filter(t=>t&&isSymbol(t.symbol)&&['buy','sell'].includes(t.type)&&Number.isFinite(+t.shares)&&+t.shares>0&&Number.isFinite(+t.price)&&+t.price>0&&Number.isFinite(+t.at)&&+t.at>0&&+t.at<now()+864e5):[];
+    pending.sort((a,b)=>a.at-b.at);const held={};let cash=START_CASH;
+    for(const t of pending){const s=t.symbol,shares=Math.round(+t.shares*1000)/1000,price=+t.price,total=shares*price;
+      if(!(shares>0)||!(price>0)||total>1e9)continue;
+      if(t.type==='buy'){if(total>cash+.001)continue;cash-=total;held[s]=(held[s]||0)+shares;}
+      else {if(shares>(held[s]||0)+.000001)continue;cash+=total;held[s]-=shares;}
+      out.trades.push({id:cleanText(t.id,80)||String(t.at),type:t.type,symbol:s,shares,price,at:+t.at,reason:cleanText(t.reason,280)});
+    }
+    out.notes=Array.isArray(p.notes)?p.notes.slice(0,2000).filter(n=>n&&Number.isFinite(+n.at)&&+n.at>0).map(n=>({id:cleanText(n.id,80),symbol:isSymbol(n.symbol)?n.symbol:'GENERAL',text:cleanText(n.text,1000),at:+n.at})).filter(n=>n.text):[];
+    return out;
+  }
+  function sanitizeState(raw){const base=emptyState();if(!raw||typeof raw!=='object')return base;base.active=raw.active==='lawrence'?'lawrence':'max';base.lang=raw.lang==='en'?'en':'zh';base.mode=raw.mode==='live'?'live':'demo';for(const m of ['demo','live'])for(const name of ['max','lawrence'])base.portfolios[m][name]=sanitizePerson(raw.portfolios?.[m]?.[name]);if(base.mode==='live'&&!apiKey)base.mode='demo';return base;}
+  let state;try{state=sanitizeState(JSON.parse(localStorage.getItem(APP_KEY)||'null'));}catch(e){state=emptyState()}
+  function person(){return state.portfolios[state.mode][state.active]}
+  function save(){try{localStorage.setItem(APP_KEY,JSON.stringify(state));$('saveStatus').textContent=tr('✓ 已儲存在這個瀏覽器 · 請定期匯出備份');}catch(e){$('saveStatus').textContent=tr('⚠ 無法儲存：瀏覽器儲存空間不可用');notify(tr('無法儲存資料，請使用備份功能。'));}}
+
+  // Simple, dependency-free Traditional Chinese / English localization.
+  const EN = {
+    "● 示範行情": "● Demo prices",
+    "⚙ 設定 / 備份": "⚙ Settings / Backup",
+    "嗨，Max！一起開始投資 🌱": "Hi, Max! Let’s learn to invest 🌱",
+    "用": "Practice with",
+    "$10,000 虛擬資金": "$10,000 in virtual money",
+    "練習選股。最多 5 支美股，": "and choose up to 5 U.S. stocks.",
+    "重點不是賺最快，而是學會": "The goal isn’t quick profits—it’s learning to",
+    "觀察、思考、記錄": "observe, think, and reflect",
+    "投資組合總價值": "Portfolio value",
+    "虛擬帳戶": "Practice account",
+    "尚未交易": "No trades yet",
+    "可用現金": "Available cash",
+    "模擬買股可使用": "Ready to invest",
+    "股票市值": "Stock holdings",
+    "持有股票目前價值": "Current value of shares",
+    "0 支": "0 stocks",
+    "累積報酬": "Total gain / loss",
+    "相對起始本金": "vs. starting $10,000",
+    "PERFORMANCE / 走勢探索": "PERFORMANCE / EXPLORE",
+    "投資組合走勢": "Portfolio performance",
+    "整體投資組合": "Entire portfolio",
+    "+0.00% · 所選期間": "+0.00% · selected period",
+    "虛擬投資練習；示範行情不是市場實際股價。": "Learning simulation: demo prices are not actual market quotes.",
+    "我的選股": "My watchlist",
+    "先觀察，再決定要不要買": "Watch first. Decide later.",
+    "＋ 選股票": "+ Add stock",
+    "↗ 模擬買入": "↗ Practice buying",
+    "↘ 模擬賣出": "↘ Practice selling",
+    "🗂 買賣紀錄": "🗂 Trade history",
+    "每一次交易都是一堂課": "Every trade is a chance to learn",
+    "↶ 撤銷最後一筆": "↶ Undo last trade",
+    "✍️ 我的投資日記": "✍️ My investing journal",
+    "寫下「為什麼」比猜股價更重要": "Your reasons matter more than predictions",
+    "＋ 寫日記": "+ New entry",
+    "💡 本週小問題": "💡 Question of the week",
+    "如果你買的股票明天跌了 10%，你會怎麼做？為什麼？可以記在投資日記裡。": "If a stock you owned fell 10% tomorrow, what would you do—and why? Write about it in your journal.",
+    "Little Investors © 2026 · 家庭理財教育工具 · 不會執行真實交易或提供投資建議": "Little Investors © 2026 · Financial learning for families · No real trades or investment advice",
+    "資料僅儲存在這個瀏覽器 · 請定期匯出備份": "Saved only in this browser · Export backups regularly",
+    "＋ 新增觀察股票": "+ Add a stock to watch",
+    "美股代號（例如 AAPL）": "U.S. stock symbol (e.g., AAPL)",
+    "每人最多 5 支，新增只是加入觀察清單，還沒有買進。": "Up to 5 stocks per child. Adding one to your watchlist does not buy it.",
+    "試試看這些代號": "Try one of these symbols",
+    "取消": "Cancel",
+    "加入我的選股": "Add to my watchlist",
+    "模擬買入": "Practice buy",
+    "買入 Buy": "Buy",
+    "賣出 Sell": "Sell",
+    "選擇股票": "Choose a stock",
+    "目前參考價格": "Reference price",
+    "示範行情 · 非真實報價": "Demo price · not a live quote",
+    "股數（可輸入小數）": "Number of shares (fractions allowed)",
+    "可用現金 $10,000.00": "Available cash $10,000.00",
+    "我的投資理由（建議每次都寫）": "Why am I making this trade? (recommended)",
+    "這次交易估計金額": "Estimated trade amount",
+    "純模擬練習。成交價採畫面顯示的參考價格，": "Practice only. Trades use the displayed reference price;",
+    "不計手續費、稅金或滑價": "fees, taxes, and slippage are excluded",
+    "，不等於真實成交。": ". This is not an actual execution.",
+    "確認模擬買入": "Confirm practice buy",
+    "✍️ 記下我的想法": "✍️ Record my thoughts",
+    "關於哪一支股票？": "Which stock is this about?",
+    "今天想記錄什麼？": "What did I learn today?",
+    "保存日記": "Save journal entry",
+    "⚙ 設定與資料備份": "⚙ Settings & backups",
+    "① 行情來源": "① Price data source",
+    "示範模式完全不用金鑰，可立即練習；真實模式需自行申請 Twelve Data API key。": "Demo mode needs no API key. For market data, get your own Twelve Data API key.",
+    "兩種模式的交易帳本分開": "Demo and market-data ledgers are separate",
+    "，不會把假價格和真價格混用。": ", so simulated prices never mix with real market data.",
+    "使用示範行情": "Use demo prices",
+    "切換市場資料": "Switch to market data",
+    "Key 只存於這台裝置的瀏覽器，不會寫進 GitHub 網站檔案。共享裝置使用仍有金鑰外洩風險。": "The key stays in this browser, not in the GitHub website files. It may still be exposed on shared devices.",
+    "儲存金鑰": "Save API key",
+    "刪除金鑰": "Delete API key",
+    "↻ 更新報價": "↻ Refresh quotes",
+    "② 備份孩子的紀錄": "② Back up the kids’ records",
+    "紀錄只存在「這個瀏覽器」。換電腦或清除網站資料會消失；定期下載 JSON 備份，再到其他裝置匯入。": "Records stay in this browser only. They may disappear if you switch devices or clear site data. Download a JSON backup regularly and import it on another device.",
+    "↓ 匯出備份": "↓ Export backup",
+    "↑ 匯入備份": "↑ Import backup",
+    "🔐 此網站不需要真實券商帳戶、銀行資訊或信用卡。公開的 GitHub Pages 網址可以被他人開啟，但不會自動看到你這台裝置的紀錄。": "🔐 No brokerage account, bank details or credit card required. Others can visit your public GitHub Pages site, but cannot automatically see records stored in your browser.",
+    "選擇學員": "Choose child",
+    "投資數據": "Portfolio statistics",
+    "選擇走勢": "Choose chart",
+    "走勢時間範圍": "Chart date range",
+    "股票價值折線圖": "Stock value line chart",
+    "關閉": "Close",
+    "輸入股票代號": "Enter stock symbol",
+    "例如 1 或 0.5": "e.g., 1 or 0.5",
+    "例如：我看好這家公司長期的產品及成長，但也知道股價會下跌。": "e.g., I believe in this company’s long-term products, but I know its stock price can fall.",
+    "我今天觀察到……；我覺得有什麼風險……；下次要注意……": "Today I noticed… Risks I see… Things I’ll watch next…",
+    "在此貼上自己的 API key": "Paste your own API key here",
+    "。": ".",
+    "✓ 已儲存在這個瀏覽器 · 請定期匯出備份": "✓ Saved in this browser · Export backups regularly",
+    "⚠ 無法儲存：瀏覽器儲存空間不可用": "⚠ Cannot save: browser storage unavailable",
+    "無法儲存資料，請使用備份功能。": "Could not save data. Please use the backup feature.",
+    "● 市場資料": "● Market data",
+    "！一起開始投資 🌱": "! Let’s learn to invest 🌱",
+    "讀取中…": "Loading…",
+    "等待報價": "Waiting for quotes",
+    " 支": " stocks",
+    " 筆交易": " trades",
+    " 股": " shares",
+    "待更新": "Updating…",
+    "查看 ": "View ",
+    " 走勢": " chart",
+    "還沒有選股票": "No stocks selected yet",
+    "從你認識的公司開始！": "Start with companies you know!",
+    "例如 Apple、Microsoft、NVIDIA。": "For example: Apple, Microsoft, NVIDIA.",
+    "時間": "Date",
+    "動作": "Action",
+    "股票": "Stock",
+    "股數": "Shares",
+    "成交價": "Trade price",
+    "交易金額": "Amount",
+    "理由": "Reason",
+    "買入": "Buy",
+    "賣出": "Sell",
+    "未填寫": "Not provided",
+    "還沒有買賣紀錄。": "No trades yet.",
+    "選一支股票，用虛擬資金做你的第一筆交易吧！": "Pick a stock and place your first practice trade.",
+    "我的想法": "General thoughts",
+    "為什麼喜歡某家公司？": "Why do you like this company?",
+    "寫下你的第一篇投資日記吧！": "Write your first journal entry!",
+    "載入走勢": "Loading chart",
+    "正在讀取 ": "Loading ",
+    " 時間區間…": " range…",
+    "正在載入圖表…": "Loading chart…",
+    "沒有此時間範圍的資料": "No data in this date range",
+    "全部可取得歷史": "All available history",
+    "過去 ": "Past ",
+    "（依圖表起點計算）": "(from chart starting point)",
+    "示範行情：所有價格、走勢皆為生成的模擬資料，不代表真實股價。": "Demo mode: All prices and charts are generated, not actual stock prices.",
+    "Twelve Data 歷史報價估算；依交易紀錄回放，非逐筆精確回測，報價可能延遲。": "Twelve Data history, estimated from trade records (not a precise backtest); quotes may be delayed.",
+    "Twelve Data 歷史股價，資料範圍、更新速度及延遲依訂閱方案而異。": "Twelve Data historical prices; coverage, updates and delays vary by plan.",
+    "暫時無法取得走勢": "Chart unavailable",
+    "請確認 API 方案、網路連線或稍後再試": "Check your API plan, internet connection or try later.",
+    "請輸入有效股票代號，例如 AAPL。": "Enter a valid U.S. stock symbol, such as AAPL.",
+    " 已經在你的名單裡": " is already on your watchlist",
+    "每人最多選擇 5 支股票。": "Maximum 5 stocks per child.",
+    "查詢中…": "Looking up…",
+    "已把 ": "Added ",
+    " 加入觀察清單。": " to your watchlist.",
+    "無法新增 ": "Could not add ",
+    "：": ": ",
+    "先選至少一支股票，才能模擬買賣。": "Add a stock before practicing a trade.",
+    "目前沒有可賣出的持股。": "You have no shares available to sell.",
+    "模擬": "Practice ",
+    "確認模擬": "Confirm practice ",
+    "載入中…": "Loading…",
+    "示範價格 · 不代表真實行情": "Demo price · not actual market data",
+    "Twelve Data · 報價日期 ": "Twelve Data · quote date ",
+    "Twelve Data · 報價可能延遲": "Twelve Data · quotes may be delayed",
+    "可用現金：": "Available cash: ",
+    "可賣數量：": "Shares available to sell: ",
+    "請選擇觀察清單內的股票": "Choose a stock from your watchlist",
+    "股數請輸入大於 0 的數字，最多三位小數。": "Enter a positive number of shares (up to 3 decimal places).",
+    "更新價格…": "Updating price…",
+    "虛擬現金不足。可用 ": "Not enough practice cash. Available: ",
+    "持股不足，最多可賣 ": "Not enough shares. Maximum: ",
+    "已記錄 ": "Recorded ",
+    "交易未完成：": "Trade not completed: ",
+    "沒有可撤銷的交易": "No trades to undo",
+    "確定撤銷最後一筆 ": "Undo the last trade: ",
+    " 嗎？": "?",
+    "已撤銷最後一筆交易。": "Last trade undone.",
+    "整體投資想法": "General investing thoughts",
+    "先寫一點你的觀察吧": "Write an observation first.",
+    "已儲存你的投資日記。": "Journal entry saved.",
+    "請先選一支股票": "Choose a stock first.",
+    "請先模擬賣出持股，再移出觀察名單。": "Sell all practice shares before removing this stock from the watchlist.",
+    "要將 ": "Remove ",
+    " 從觀察清單移除嗎？\n既有交易及日記紀錄會保留。": " from your watchlist?\nTrade and journal history will be kept.",
+    "已移出觀察清單。": "Removed from watchlist.",
+    "備份檔案已下載，請妥善保存。": "Backup downloaded. Please keep it safe.",
+    "檔案過大（上限 3 MB）": "File too large (3 MB max).",
+    "不是此網站的備份檔": "Not a backup from this website.",
+    "匯入將覆蓋目前的 Max 與 Lawrence 兩人紀錄（示範與市場模式）。\n確定要匯入嗎？": "Import will overwrite Max and Lawrence’s current records (both demo and market mode).\nContinue?",
+    "紀錄已匯入！": "Records imported!",
+    "匯入失敗：": "Import failed: ",
+    "請先輸入並儲存 Twelve Data API key。": "Enter and save a Twelve Data API key first.",
+    "已切換至示範行情（獨立帳本）。": "Switched to demo prices (separate ledger).",
+    "已切換至市場資料（獨立帳本）。": "Switched to market data (separate ledger).",
+    "請輸入 API key": "Enter an API key.",
+    "金鑰無法儲存到此瀏覽器": "Could not save the key in this browser.",
+    "API key 已存到本裝置瀏覽器。": "API key saved in this browser.",
+    "API key 已從這個瀏覽器刪除。": "API key deleted from this browser.",
+    "行情更新中…": "Refreshing quotes…",
+    "目前沒有可賣出的持股": "No shares available to sell.",
+    "移除這支股票": "Remove this stock",
+    "有持股時須先賣出；歷史紀錄不會刪除": "Sell all held shares first; historical records stay.",
+    "請先在設定頁輸入 API key": "Enter an API key in Settings first.",
+    "網路錯誤 HTTP ": "Network error HTTP ",
+    "API 無法取得行情": "Market API unavailable",
+    " 沒有可用報價": " has no available quote",
+    " 不是美元計價商品；本網站僅支援美元美股": " is not priced in USD; only USD stocks are supported.",
+    "暫不支援 OTC 股票": "OTC stocks are not supported.",
+    "請先設定行情 API key": "Set your market data API key first.",
+    " 無歷史資料（可能受免費方案限制）": " has no history (free-plan limitation possible).",
+    " 無有效行情": " has no valid data."
+  };
+  const tr=(text)=>state.lang==='en'?(EN[text]??text):text;
+  let originalStaticText=[],originalStaticAttrs=[];
+  function initTranslations(){
+    const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;
+    while((node=walker.nextNode())){if(node.parentElement?.closest('script,style'))continue;const original=node.nodeValue;const key=original.trim();if(EN[key])originalStaticText.push({node,original,key});}
+    for(const el of document.querySelectorAll('[aria-label],[placeholder],[title]'))for(const attr of ['aria-label','placeholder','title']){const original=el.getAttribute(attr);if(original&&EN[original])originalStaticAttrs.push({el,attr,original});}
+  }
+  function applyLanguage(){
+    document.documentElement.lang=state.lang==='en'?'en':'zh-Hant';
+    for(const {node,original,key} of originalStaticText){const v=state.lang==='en'?EN[key]:key;node.nodeValue=original.replace(key,v);}
+    for(const {el,attr,original} of originalStaticAttrs)el.setAttribute(attr,state.lang==='en'?EN[original]:original);
+    document.querySelectorAll('[data-lang]').forEach(btn=>{let active=btn.dataset.lang===state.lang;btn.classList.toggle('active',active);btn.setAttribute('aria-pressed',String(active));});
+    if(removeBtn){removeBtn.textContent=tr('移除這支股票');removeBtn.title=tr('有持股時須先賣出；歷史紀錄不會刪除');}
+  }
+  function notify(s){const el=$('toast');el.textContent=s;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3700);}
+  function calc(p){let cash=START_CASH,hold={};for(const t of p.trades){const v=t.shares*t.price;if(t.type==='buy'){cash-=v;hold[t.symbol]=(hold[t.symbol]||0)+t.shares;}else{cash+=v;hold[t.symbol]=(hold[t.symbol]||0)-t.shares;}}for(const s of Object.keys(hold))if(Math.abs(hold[s])<.000001)delete hold[s];return {cash,hold};}
+  function priceOf(s){const entry=cache.get(state.mode+':quote:'+s);return entry?.value?.price||null;}
+  function findName(s){return cache.get(state.mode+':quote:'+s)?.value?.name||STOCKS[s]?.[0]||s;}
+  function hash(s){let h=2166136261;for(let i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),16777619);return h>>>0;}
+  function demoPrice(s,t){const h=hash(s),base=STOCKS[s]?.[1]||(40+h%220),days=(t-Date.UTC(2020,0,1))/864e5;
+    const growth=(2+(h%8))/100000,trend=Math.exp((days-2400)*growth);
+    const wobble=1+.12*Math.sin(days/73+h%31)+.052*Math.sin(days/16+h%13)+.016*Math.sin(days*1.76+h%77)+.004*Math.sin(t/2800000+h%30);
+    return Math.max(1,base*trend*wobble);
+  }
+  function demoQuote(s){let p=demoPrice(s,now()),prev=demoPrice(s,now()-864e5);return {price:p,prev,name:findName(s),at:now(),demo:true};}
+  function demoHistory(s,r){const count=r==='MAX'?270:r==='1Y'?100:100,end=now(),spans={'1D':864e5,'1W':7*864e5,'1M':30*864e5,'1Y':365*864e5,'MAX':(end-Date.UTC(2016,0,1))};const span=spans[r];return Array.from({length:count},(_,i)=>{const x=end-span+(span*i)/(count-1);return {x,y:demoPrice(s,x)}});}
+  const liveCacheLife= {quote:5*60*1000,hist:15*60*1000};
+  let apiTimes=[];let apiQueue=Promise.resolve();
+  async function getAPI(endpoint,params){
+    // The free Twelve Data account generally allows 8 API credits/min. Queue conservatively.
+    const job=async()=>{apiTimes=apiTimes.filter(t=>now()-t<61000);if(apiTimes.length>=7){const wait=61000-(now()-apiTimes[0])+150;await new Promise(resolve=>setTimeout(resolve,Math.max(1000,wait)));apiTimes=apiTimes.filter(t=>now()-t<61000);}apiTimes.push(now());
+      const u=new URL('https://api.twelvedata.com/'+endpoint);Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,String(v)));u.searchParams.set('apikey',apiKey);
+      const controller=new AbortController();const tm=setTimeout(()=>controller.abort(),18000);
+      try{const resp=await fetch(u.toString(),{signal:controller.signal,cache:'no-store'});if(!resp.ok)throw Error(tr('網路錯誤 HTTP ')+resp.status);const data=await resp.json();if(data.status==='error'||data.code&&data.message)throw Error(String(data.message||tr('API 無法取得行情')));return data;}finally{clearTimeout(tm)}
+    };
+    const queued=apiQueue.then(job,job);apiQueue=queued.catch(()=>{});return queued;
+  }
+  async function getQuote(s,{force=false}={}){
+    const key=state.mode+':quote:'+s,existing=cache.get(key);if(!force&&existing&&now()-existing.at<liveCacheLife.quote)return existing.value;
+    if(state.mode==='demo'){const value=demoQuote(s);cache.set(key,{value,at:now()});return value;}
+    if(!apiKey)throw Error(tr('請先在設定頁輸入 API key'));
+    const d=await getAPI('quote',{symbol:s});const p=Number(d.close||d.price),prev=Number(d.previous_close);
+    if(!Number.isFinite(p)||p<=0)throw Error(s+tr(' 沒有可用報價'));if(d.currency&&d.currency!=='USD')throw Error(s+tr(' 不是美元計價商品；本網站僅支援美元美股'));
+    if(d.exchange&&/OTC/i.test(d.exchange))throw Error(tr('暫不支援 OTC 股票'));
+    const value={price:p,prev:Number.isFinite(prev)?prev:p,name:cleanText(d.name,70)||s,at:now(),demo:false,marketDate:cleanText(d.datetime,30)};cache.set(key,{value,at:now()});return value;
+  }
+  async function getHistory(s,r,isPortfolio=false){
+    const mode=state.mode,per=PERIODS[r],interval=isPortfolio&&r==='MAX'?'1week':per.interval,size=isPortfolio&&r==='MAX'?1050:per.size,key=mode+':hist:'+s+':'+interval+':'+size;
+    const existing=cache.get(key);if(existing&&now()-existing.at<liveCacheLife.hist)return existing.value;
+    if(mode==='demo'){const value=demoHistory(s,r);cache.set(key,{at:now(),value});return value;}
+    if(!apiKey)throw Error(tr('請先設定行情 API key'));
+    const d=await getAPI('time_series',{symbol:s,interval,outputsize:size,order:'asc',timezone:'America/New_York'});
+    if(!Array.isArray(d.values)||!d.values.length)throw Error(s+tr(' 無歷史資料（可能受免費方案限制）'));
+    const value=d.values.map(v=>{
+      const time=v.datetime.includes(' ')?v.datetime.replace(' ','T')+'-04:00':v.datetime+'T16:00:00-04:00';return {x:new Date(time).getTime(),y:Number(v.close),dayKey:String(v.datetime).slice(0,10)};
+    }).filter(v=>Number.isFinite(v.x)&&Number.isFinite(v.y)&&v.y>0).sort((a,b)=>a.x-b.x);
+    if(value.length<1)throw Error(s+tr(' 無有效行情'));
+    // 1D is the most recent trading session, not an arbitrary 90-candle window.
+    let filtered=value;
+    if(r==='1D'){
+      const recentDay=value.at(-1).dayKey;
+      filtered=value.filter(item=>item.dayKey===recentDay);
+    }else if(r!=='MAX'){
+      const windowDays=r==='1W'?7:r==='1M'?30:365;
+      const limit=value.at(-1).x-windowDays*864e5;
+      const clipped=value.filter(item=>item.x>=limit);
+      if(clipped.length>=2)filtered=clipped;
+    }
+    if(filtered.length===1&&value.length>1)filtered=value.slice(-2);
+    cache.set(key,{value:filtered,at:now()});return filtered;
+  }
+  function renderNav(){for(const name of ['max','lawrence']){$('tab-'+name).classList.toggle('selected',name===state.active);$('tab-'+name).setAttribute('aria-selected',String(name===state.active));}$('modeBadge').textContent=tr(state.mode==='demo'?'● 示範行情':'● 市場資料');$('modeBadge').classList.toggle('live',state.mode==='live');$('heroTitle').textContent=state.lang==='en'?'Hi, '+(state.active==='max'?'Max':'Lawrence')+'! Let’s learn to invest 🌱':'嗨，'+(state.active==='max'?'Max':'Lawrence')+'！一起開始投資 🌱';}
+  function renderStats(){const p=person(),{cash,hold}=calc(p);const invested=Object.entries(hold).reduce((acc,[s,q])=>acc+(priceOf(s)||0)*q,0);const valid=Object.keys(hold).every(s=>priceOf(s));const total=cash+invested,profit=Math.abs(total-START_CASH)<0.005?0:total-START_CASH;
+    $('statCash').textContent=money(cash);$('statInvested').textContent=valid?money(invested):tr('讀取中…');$('statTotal').textContent=valid?money(total):tr('讀取中…');$('statProfit').textContent=valid?money(profit):tr('讀取中…');$('statProfit').className='stat-number '+(profit>=0?'up':'down');$('statProfitPct').textContent=valid?pct(100*profit/START_CASH):tr('等待報價');$('statProfitPct').className=profit>=0?'up':'down';$('statStocks').textContent=state.lang==='en'?Object.keys(hold).length+(Object.keys(hold).length===1?' stock':' stocks'):Object.keys(hold).length+' 支';$('statTotalSub').textContent=state.lang==='en'?p.trades.length+(p.trades.length===1?' trade':' trades'):p.trades.length+' 筆交易';}
+  function renderWatch(){const p=person(),{hold}=calc(p);$('watchCount').textContent=p.watch.length+' / 5';$('watchList').innerHTML=p.watch.length?p.watch.map(s=>{const q=cache.get(state.mode+':quote:'+s)?.value,price=q?.price,prev=q?.prev,change=price&&prev?(price/prev-1)*100:null;
+    return `<button class="watch-item ${selected===s?'active':''}" data-symbol="${escapeHTML(s)}" aria-label="${escapeHTML(tr('查看 ')+s+tr(' 走勢'))}"><span class="ticker-icon">${escapeHTML(s.length>4?s.slice(0,3):s.slice(0,4))}</span><span><span class="stock-main">${escapeHTML(s)}</span><span class="stock-sub">${escapeHTML(findName(s))}${hold[s]?' · '+nfmt(hold[s])+tr(' 股'):''}</span></span><span class="stock-right"><span class="stock-price">${price?money(price):'—'}</span><span class="stock-change ${change==null?'neutral':change>=0?'up':'down'}">${change==null?tr('待更新'):pct(change)}</span></span></button>`}).join(''):`<div class="empty"><span class="big">🌱</span><strong>${tr('還沒有選股票')}</strong><br>${tr('從你認識的公司開始！')}<br>${tr('例如 Apple、Microsoft、NVIDIA。')}</div>`;
+    const options=[`<option value="portfolio">${tr('整體投資組合')}</option>`,...p.watch.map(s=>`<option value="${s}">${s} · ${escapeHTML(findName(s))}</option>`)].join('');$('chartSelect').innerHTML=options;
+    if(selected!=='portfolio'&&!p.watch.includes(selected))selected='portfolio';$('chartSelect').value=selected;
+  }
+  function renderHistory(){const list=person().trades.slice().reverse();$('historyWrap').innerHTML=list.length?`<table class="history-table"><thead><tr>${['時間','動作','股票','股數','成交價','交易金額','理由'].map(k=>'<th>'+tr(k)+'</th>').join('')}</tr></thead><tbody>${list.map(t=>`<tr><td>${day(t.at)}</td><td><span class="tag ${t.type==='sell'?'sell':''}">${tr(t.type==='buy'?'買入':'賣出')}</span></td><td class="symbol-cell">${t.symbol}</td><td>${nfmt(t.shares)}</td><td>${money(t.price)}</td><td>${money(t.shares*t.price)}</td><td title="${escapeHTML(t.reason)}" class="reason">${escapeHTML(t.reason||tr('未填寫'))}</td></tr>`).join('')}</tbody></table>`:`<div class="empty-table">${tr('還沒有買賣紀錄。')}<br>${tr('選一支股票，用虛擬資金做你的第一筆交易吧！')}</div>`;}
+  function renderNotes(){const items=person().notes.slice().reverse().slice(0,6);$('noteList').innerHTML=items.length?items.map(n=>`<div class="note-item"><div class="note-head"><b>${escapeHTML(n.symbol==='GENERAL'?tr('我的想法'):n.symbol)}</b><span>${day(n.at)}</span></div><div class="note-body">${escapeHTML(n.text)}</div></div>`).join(''):`<div class="empty-table">${tr('為什麼喜歡某家公司？')}<br>${tr('寫下你的第一篇投資日記吧！')}</div>`;}
+  function renderBasics(){renderNav();renderWatch();renderStats();renderHistory();renderNotes();}
+  async function hydrateQuotes(){const mySeq=++quoteSeq;const p=person();const tickers=[...new Set([...p.watch,...Object.keys(calc(p).hold)])];renderBasics();for(const s of tickers){if(mySeq!==quoteSeq)return;try{await getQuote(s);if(mySeq!==quoteSeq)return;renderWatch();renderStats();}catch(e){if(mySeq===quoteSeq){notify(s+'：'+e.message);renderWatch();renderStats();}}}if(mySeq===quoteSeq)refreshChart();}
+  function setRange(r){range=r;document.querySelectorAll('[data-range]').forEach(btn=>btn.classList.toggle('active',btn.dataset.range===r));refreshChart();}
+  function chartDateLabel(t,r){const d=new Date(t);return r==='1D'?d.toLocaleTimeString(state.lang==='en'?'en-US':'zh-TW',{hour:'numeric',minute:'2-digit'}):r==='MAX'?d.toLocaleDateString(state.lang==='en'?'en-US':'zh-TW',{month:'short',year:'2-digit'}):d.toLocaleDateString(state.lang==='en'?'en-US':'zh-TW',{month:'short',day:'numeric'});}
+  function drawChart(points,kind,r){const svg=$('graph'),tooltip=$('hoverTip');tooltip.style.display='none';const lineColor=points.length>1&&points.at(-1).y<points[0].y-0.005?'#d3595d':'#14825b';let min=Math.min(...points.map(p=>p.y)),max=Math.max(...points.map(p=>p.y));if(!Number.isFinite(min)||!Number.isFinite(max)||!points.length){svg.innerHTML='';return;}
+    let diff=max-min;const minSpan=Math.max(1,Math.abs(max)*.015);if(diff<minSpan){const mid=(max+min)/2;min=mid-minSpan/2;max=mid+minSpan/2;}else{min-=diff*.13;max+=diff*.13;}
+    const W=900,H=265,L=12,R=78,T=16,B=30,pw=W-L-R,ph=H-T-B;
+    chartPoints=points.map((p,i)=>({...p,px:L+pw*(i/(Math.max(1,points.length-1))),py:T+ph*(max-p.y)/(max-min)}));
+    const path=chartPoints.map((p,i)=>(i?'L':'M')+p.px.toFixed(2)+' '+p.py.toFixed(2)).join(' '),area=path+' L'+chartPoints.at(-1).px+' '+(H-B)+' L'+L+' '+(H-B)+' Z';
+    const ticks=Array.from({length:4},(_,i)=>{const val=max-i*(max-min)/3,y=T+i*ph/3;return `<line x1="${L}" y1="${y}" x2="${W-R+5}" y2="${y}" stroke="#eaf0e9" stroke-dasharray="4 7"/><text x="${W-R+12}" y="${y+4}" fill="#91a095" font-size="13">${kind==='stock'?'$'+val.toFixed(val<10?2:0):'$'+Math.round(val).toLocaleString()}</text>`}).join('');
+    const labels=[0,Math.floor((points.length-1)/3),Math.floor(2*(points.length-1)/3),points.length-1].map(i=>{const x=chartPoints[i].px;return `<text x="${x}" y="${H-6}" text-anchor="${i===0?'start':i===points.length-1?'end':'middle'}" fill="#9aaa9e" font-size="12">${chartDateLabel(points[i].x,r)}</text>`}).join('');
+    svg.innerHTML=`<defs><linearGradient id="shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${lineColor}" stop-opacity=".18"/><stop offset="100%" stop-color="${lineColor}" stop-opacity="0"/></linearGradient></defs>${ticks}<path d="${area}" fill="url(#shade)"/><path d="${path}" fill="none" stroke="${lineColor}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${labels}<g id="chartCursor" visibility="hidden"><line id="cursorLine" y1="${T}" y2="${H-B}" stroke="#799a83" stroke-dasharray="3 4"/><circle id="cursorDot" r="5" fill="${lineColor}" stroke="white" stroke-width="3"/></g>`;
+    svg.onpointermove=e=>{if(!chartPoints.length)return;const rect=svg.getBoundingClientRect(),x=(e.clientX-rect.left)/rect.width*W,idx=Math.max(0,Math.min(chartPoints.length-1,Math.round((x-L)/pw*(chartPoints.length-1)))),p=chartPoints[idx];$('chartCursor').setAttribute('visibility','visible');$('cursorLine').setAttribute('x1',p.px);$('cursorLine').setAttribute('x2',p.px);$('cursorDot').setAttribute('cx',p.px);$('cursorDot').setAttribute('cy',p.py);tooltip.style.display='block';tooltip.textContent=chartDateLabel(p.x,r)+' · '+money(p.y);tooltip.style.left=Math.min(rect.width-145,Math.max(6,p.px/W*rect.width-55))+'px';tooltip.style.top=Math.max(8,p.py/H*rect.height-48)+'px';};
+    svg.onpointerleave=()=>{tooltip.style.display='none';$('chartCursor')?.setAttribute('visibility','hidden');};
+  }
+  function flatPoints(r){const end=now(),span=PERIODS[r].ms||365*864e5;return Array.from({length:30},(_,i)=>({x:end-span+i*span/29,y:START_CASH}));}
+  function latestCashValue(p){const {cash,hold}=calc(p);return cash+Object.entries(hold).reduce((acc,[s,q])=>acc+(priceOf(s)||0)*q,0);}
+  async function makePortfolioSeries(p,r){
+    if(!p.trades.length)return flatPoints(r);
+    const symbols=[...new Set(p.trades.map(t=>t.symbol))];
+    const bySym={};for(const s of symbols)bySym[s]=await getHistory(s,r,true);
+    const from=r==='MAX'?Math.min(p.trades[0].at,now()-864e5):now()-PERIODS[r].ms;
+    let times=[...new Set(Object.values(bySym).flatMap(arr=>arr.map(pt=>pt.x)))].filter(t=>t>=from&&t<=now()).sort((a,b)=>a-b);
+    if(times.length>180){const step=Math.ceil(times.length/180);times=times.filter((_,i)=>i%step===0);}
+    if(times.length<1)times=[from];
+    const ledgers=p.trades.slice().sort((a,b)=>a.at-b.at),hold={},indices={};let cash=START_CASH,j=0;
+    const pts=times.map(t=>{while(j<ledgers.length&&ledgers[j].at<=t){const a=ledgers[j++],q=a.type==='buy'?a.shares:-a.shares;cash+=(a.type==='buy'?-1:1)*a.shares*a.price;hold[a.symbol]=(hold[a.symbol]||0)+q;}
+      let val=cash;for(const [s,q] of Object.entries(hold)){if(!q)continue;const series=bySym[s];let i=indices[s]||0;while(i+1<series.length&&series[i+1].x<=t)i++;indices[s]=i;val+=q*series[i].y;}return {x:t,y:val};});
+    const current=latestCashValue(p);if(Number.isFinite(current)&&Object.keys(calc(p).hold).every(priceOf))pts.push({x:now(),y:current});
+    return pts.length>=2?pts:flatPoints(r);
+  }
+  async function refreshChart(){const seq=++renderSeq,p=person(),sym=selected,r=range,isPortfolio=sym==='portfolio';$('chartHeading').textContent=isPortfolio?tr('投資組合走勢'):sym+' · '+findName(sym);$('chartValue').innerHTML='<span class="loader"></span>'+tr('載入走勢');$('chartReturn').innerHTML='<span class="neutral">'+tr('正在讀取 ')+r+tr(' 時間區間…')+'</span>';$('chartInfo').textContent=tr('正在載入圖表…');
+    try{
+      const pts=isPortfolio?await makePortfolioSeries(p,r):await getHistory(sym,r);
+      if(seq!==renderSeq)return;
+      if(pts.length<1)throw Error(tr('沒有此時間範圍的資料'));
+      let last=isPortfolio?Object.keys(calc(p).hold).every(priceOf)?latestCashValue(p):pts.at(-1).y:priceOf(sym)||pts.at(-1).y;
+      if(!isPortfolio&&state.mode==='live'&&!priceOf(sym))last=pts.at(-1).y;
+      const start=pts[0].y,actualEnd=pts.at(-1).y,rawChange=start>0?(actualEnd/start-1)*100:0,change=Math.abs(rawChange)<0.0001?0:rawChange;
+      $('chartValue').textContent=money(last);
+      $('chartReturn').innerHTML=`<span class="${change>=0?'up':'down'}">${change>=0?'↗':'↘'} ${pct(change)} · ${escapeHTML(r==='MAX'?tr('全部可取得歷史'):tr('過去 ')+r)} </span><span class="neutral" style="font-size:11px;font-weight:500">${tr('（依圖表起點計算）')}</span>`;
+      $('chartInfo').textContent=tr(state.mode==='demo'?'示範行情：所有價格、走勢皆為生成的模擬資料，不代表真實股價。':isPortfolio?'Twelve Data 歷史報價估算；依交易紀錄回放，非逐筆精確回測，報價可能延遲。':'Twelve Data 歷史股價，資料範圍、更新速度及延遲依訂閱方案而異。');
+      drawChart(pts,isPortfolio?'portfolio':'stock',r);
+    }catch(e){if(seq!==renderSeq)return;$('chartValue').textContent=tr('暫時無法取得走勢');$('chartReturn').innerHTML='<span class="neutral">'+tr('請確認 API 方案、網路連線或稍後再試')+'</span>';$('graph').innerHTML='';$('chartInfo').textContent=e.message;}
+  }
+  function renderAll(){renderBasics();hydrateQuotes();refreshChart();}
+  function switchPerson(n){if(n===state.active)return;state.active=n;selected='portfolio';save();renderAll();}
+  function openDialog(id){$(id).showModal();}
+  function closeDialogs(){document.querySelectorAll('dialog').forEach(d=>{if(d.open)d.close()});}
+  function openAdd(){$('symbolInput').value='';$('suggestedChips').innerHTML=POPULAR.slice(0,12).map(s=>`<button type="button" class="chip" data-suggest="${s}">${s}</button>`).join('');openDialog('addDialog');}
+  async function addSymbol(){const s=$('symbolInput').value.trim().toUpperCase(),p=person();if(!isSymbol(s))return notify(tr('請輸入有效股票代號，例如 AAPL。'));if(p.watch.includes(s))return notify(s+tr(' 已經在你的名單裡'));if(p.watch.length>=5)return notify(tr('每人最多選擇 5 支股票。'));
+    const btn=$('addForm').querySelector('[type="submit"]');btn.disabled=true;btn.textContent=tr('查詢中…');try{await getQuote(s);p.watch.push(s);selected=s;save();closeDialogs();renderAll();notify(tr('已把 ')+s+tr(' 加入觀察清單。'));}catch(e){notify(tr('無法新增 ')+s+tr('：')+e.message);}finally{btn.disabled=false;btn.textContent=tr('加入我的選股');}
+  }
+  function openTrade(type){const p=person();if(!p.watch.length){notify(tr('先選至少一支股票，才能模擬買賣。'));return;}tradeType=type;const h=calc(p).hold;let options=type==='sell'?p.watch.filter(s=>(h[s]||0)>.000001):p.watch;
+    if(!options.length){notify(tr('目前沒有可賣出的持股。'));return;}
+    $('tradeSymbol').innerHTML=options.map(s=>`<option value="${s}">${s} · ${escapeHTML(findName(s))}</option>`).join('');$('tradeSymbol').value=options.includes(selected)?selected:options[0];$('tradeShares').value='';$('tradeReason').value='';updateTradeUI();openDialog('tradeDialog');}
+  function updateTradeUI(){const type=tradeType,s=$('tradeSymbol').value,h=calc(person());$('tradeTitle').textContent=tr('模擬')+tr(type==='buy'?'買入':'賣出');$('buyTab').classList.toggle('active',type==='buy');$('sellTab').classList.toggle('active',type==='sell');$('sellTab').classList.toggle('sell',type==='sell');$('tradeSubmit').textContent=tr('確認模擬')+tr(type==='buy'?'買入':'賣出');
+    const current=cache.get(state.mode+':quote:'+s)?.value,price=current?.price,shares=Number($('tradeShares').value);
+    $('tradePrice').textContent=price?money(price):tr('載入中…');$('tradeQuoteSource').textContent=state.mode==='demo'?tr('示範價格 · 不代表真實行情'):current?.marketDate?tr('Twelve Data · 報價日期 ')+current.marketDate:tr('Twelve Data · 報價可能延遲');$('tradeAvailable').textContent=type==='buy'?tr('可用現金：')+money(h.cash):tr('可賣數量：')+nfmt(h.hold[s]||0)+tr(' 股');$('tradeTotal').textContent=price&&Number.isFinite(shares)&&shares>0?money(shares*price):money(0);
+    if(state.mode==='live'&&!price)getQuote(s).then(()=>updateTradeUI()).catch(e=>notify(e.message));
+  }
+  async function executeTrade(){const p=person(),s=$('tradeSymbol').value,shares=Number($('tradeShares').value);if(!isSymbol(s)||!p.watch.includes(s))return notify(tr('請選擇觀察清單內的股票'));if(!Number.isFinite(shares)||shares<=0||Math.round(shares*1000)!==shares*1000&&Math.abs(Math.round(shares*1000)-shares*1000)>1e-7)return notify(tr('股數請輸入大於 0 的數字，最多三位小數。'));
+    const btn=$('tradeSubmit');btn.disabled=true;btn.textContent=tr('更新價格…');try{const q=await getQuote(s),price=q.price,value=price*shares,summary=calc(p);
+      if(tradeType==='buy'&&value>summary.cash+.000001)throw Error(tr('虛擬現金不足。可用 ')+money(summary.cash));if(tradeType==='sell'&&shares>(summary.hold[s]||0)+.000001)throw Error(tr('持股不足，最多可賣 ')+nfmt(summary.hold[s]||0)+tr(' 股'));
+      p.trades.push({id:'trade-'+now()+'-'+Math.floor(Math.random()*1e6),type:tradeType,symbol:s,shares,price,at:now(),reason:cleanText($('tradeReason').value,280)});
+      selected=s;save();closeDialogs();renderAll();notify(tr('已記錄 ')+s+' '+tr('模擬')+tr(tradeType==='buy'?'買入':'賣出')+' '+nfmt(shares)+tr(' 股'));
+    }catch(e){notify(tr('交易未完成：')+e.message);}finally{btn.disabled=false;btn.textContent=tr('確認模擬')+tr(tradeType==='buy'?'買入':'賣出');}
+  }
+  function undoLast(){const p=person();if(!p.trades.length)return notify(tr('沒有可撤銷的交易'));const t=p.trades.at(-1);if(!confirm(tr('確定撤銷最後一筆 ')+t.symbol+' '+tr(t.type==='buy'?'買入':'賣出')+' '+nfmt(t.shares)+tr(' 股')+tr(' 嗎？')))return;p.trades.pop();save();renderAll();notify(tr('已撤銷最後一筆交易。'));}
+  function openNote(){const p=person();$('noteSymbol').innerHTML=`<option value="GENERAL">${tr('整體投資想法')}</option>`+p.watch.map(s=>`<option value="${s}">${s} · ${escapeHTML(findName(s))}</option>`).join('');$('noteSymbol').value=p.watch.includes(selected)?selected:'GENERAL';$('noteText').value='';openDialog('noteDialog');}
+  function saveNote(){const text=cleanText($('noteText').value,1000);if(!text)return notify(tr('先寫一點你的觀察吧'));const s=$('noteSymbol').value;person().notes.push({id:'note-'+now(),at:now(),symbol:s,text});save();closeDialogs();renderNotes();notify(tr('已儲存你的投資日記。'));}
+  function removeTicker(){if(selected==='portfolio')return notify(tr('請先選一支股票'));const p=person(),h=calc(p).hold;if((h[selected]||0)>.000001)return notify(tr('請先模擬賣出持股，再移出觀察名單。'));if(!confirm(tr('要將 ')+selected+tr(' 從觀察清單移除嗎？\n既有交易及日記紀錄會保留。')))return;p.watch=p.watch.filter(s=>s!==selected);selected='portfolio';save();renderAll();notify(tr('已移出觀察清單。'));}
+  function exportBackup(){const data={app:'Little Investors',exportedAt:new Date().toISOString(),version:1,portfolios:state.portfolios};const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Little-Investors-Backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);notify(tr('備份檔案已下載，請妥善保存。'));}
+  async function importBackup(file){if(!file)return;if(file.size>3000000)return notify(tr('檔案過大（上限 3 MB）'));try{const raw=JSON.parse(await file.text());if(raw.app!=='Little Investors'||!raw.portfolios)throw Error(tr('不是此網站的備份檔'));if(!confirm(tr('匯入將覆蓋目前的 Max 與 Lawrence 兩人紀錄（示範與市場模式）。\n確定要匯入嗎？')))return;
+      state.portfolios.demo.max=sanitizePerson(raw.portfolios.demo?.max);state.portfolios.demo.lawrence=sanitizePerson(raw.portfolios.demo?.lawrence);state.portfolios.live.max=sanitizePerson(raw.portfolios.live?.max);state.portfolios.live.lawrence=sanitizePerson(raw.portfolios.live?.lawrence);selected='portfolio';save();closeDialogs();renderAll();notify(tr('紀錄已匯入！'));}catch(e){notify(tr('匯入失敗：')+e.message)}finally{$('importFile').value='';}}
+  function settings(){$('apiKeyInput').value=apiKey;openDialog('settingsDialog');}
+  function setMode(mode){if(mode==='live'&&!apiKey)return notify(tr('請先輸入並儲存 Twelve Data API key。'));state.mode=mode;cache.clear();selected='portfolio';save();closeDialogs();renderAll();notify(tr(mode==='demo'?'已切換至示範行情（獨立帳本）。':'已切換至市場資料（獨立帳本）。'));}
+  function saveKey(){const key=$('apiKeyInput').value.trim();if(!key){notify(tr('請輸入 API key'));return;}apiKey=key;try{localStorage.setItem(API_KEY_STORAGE,apiKey)}catch(e){notify(tr('金鑰無法儲存到此瀏覽器'));return;}cache.clear();notify(tr('API key 已存到本裝置瀏覽器。'));}
+  function deleteKey(){apiKey='';try{localStorage.removeItem(API_KEY_STORAGE)}catch(e){}$('apiKeyInput').value='';if(state.mode==='live')setMode('demo');notify(tr('API key 已從這個瀏覽器刪除。'));}
+  // Global delegated actions
+  document.addEventListener('click',e=>{const lang=e.target.closest('[data-lang]');if(lang){if(lang.dataset.lang!==state.lang){state.lang=lang.dataset.lang;applyLanguage();save();renderAll();if($('tradeDialog').open)updateTradeUI();if($('noteDialog').open){const current=$('noteSymbol').value;$('noteSymbol').options[0].textContent=tr('整體投資想法');$('noteSymbol').value=current;} }return;}const close=e.target.closest('[data-close]');if(close){closeDialogs();return;}const ptab=e.target.closest('[data-person]');if(ptab){switchPerson(ptab.dataset.person);return;}const rangeBtn=e.target.closest('[data-range]');if(rangeBtn){setRange(rangeBtn.dataset.range);return;}
+    const stock=e.target.closest('[data-symbol]');if(stock){selected=stock.dataset.symbol;renderWatch();refreshChart();return;}
+    const suggest=e.target.closest('[data-suggest]');if(suggest){$('symbolInput').value=suggest.dataset.suggest;return;}
+    const tradeTab=e.target.closest('[data-trade-type]');if(tradeTab){tradeType=tradeTab.dataset.tradeType;const h=calc(person()).hold,opts=tradeType==='sell'?person().watch.filter(s=>(h[s]||0)>1e-6):person().watch;
+      if(!opts.length){notify(tr('目前沒有可賣出的持股'));tradeType='buy';return;}$('tradeSymbol').innerHTML=opts.map(s=>`<option value="${s}">${s} · ${escapeHTML(findName(s))}</option>`).join('');updateTradeUI();return;}
+    const action=e.target.closest('[data-action]')?.dataset.action;if(!action)return;
+    if(action==='add')openAdd();if(action==='open-buy')openTrade('buy');if(action==='open-sell')openTrade('sell');if(action==='note')openNote();if(action==='settings')settings();if(action==='undo')undoLast();});
+  $('chartSelect').addEventListener('change',e=>{selected=e.target.value;renderWatch();refreshChart()});
+  $('addForm').addEventListener('submit',e=>{e.preventDefault();addSymbol()});
+  $('tradeForm').addEventListener('submit',e=>{e.preventDefault();executeTrade()});
+  $('noteForm').addEventListener('submit',e=>{e.preventDefault();saveNote()});
+  $('tradeShares').addEventListener('input',updateTradeUI);$('tradeSymbol').addEventListener('change',updateTradeUI);
+  $('enableDemo').addEventListener('click',()=>setMode('demo'));$('enableLive').addEventListener('click',()=>setMode('live'));
+  $('saveApiKey').addEventListener('click',saveKey);$('clearApiKey').addEventListener('click',deleteKey);
+  $('refreshMarket').addEventListener('click',()=>{cache.clear();closeDialogs();renderAll();notify(tr('行情更新中…'))});
+  $('exportBtn').addEventListener('click',exportBackup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',e=>importBackup(e.target.files[0]));
+  // Stock removal: accessible through a context menu on a selected watchlist stock.
+  $('watchList').addEventListener('contextmenu',e=>{const stock=e.target.closest('[data-symbol]');if(!stock)return;e.preventDefault();selected=stock.dataset.symbol;removeTicker();});
+  // Explicit remove button appears only when a stock is selected.
+  const removeBtn=document.createElement('button');removeBtn.className='outline-btn tiny';removeBtn.textContent='移除這支股票';removeBtn.title='有持股時須先賣出；歷史紀錄不會刪除';removeBtn.style.cssText='margin-top:12px;display:none;width:100%';removeBtn.addEventListener('click',removeTicker);document.querySelector('.watch-card').appendChild(removeBtn);
+  const origRenderWatch=renderWatch;renderWatch=function(){origRenderWatch();removeBtn.style.display=selected==='portfolio'?'none':'block';};
+  initTranslations();applyLanguage();save();renderAll();
+})();
+</script>
+</body>
+</html>
